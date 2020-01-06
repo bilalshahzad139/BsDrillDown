@@ -1,0 +1,82 @@
+﻿.drildown-container {
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+#hp_header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    background-color: #fafafa;
+    border-bottom: solid 1px #dee2e6
+}
+
+    #hp_header .hp-header-breadcrumb {
+        margin: 0 3px;
+        text-decoration: none
+    }
+
+        #hp_header .hp-header-breadcrumb span {
+            display: inline-block;
+            margin-left: 3px;
+            color: #333
+        }
+
+.hierarchy-custom {
+    margin: 0;
+    padding: 0
+}
+
+    .hierarchy-custom li {
+        -webkit-box-pack: justify !important;
+        -ms-flex-pack: justify !important;
+        justify-content: space-between !important;
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        padding: 0
+    }
+
+        .hierarchy-custom li span {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            margin-top: -7px
+        }
+
+        .hierarchy-custom li a {
+            width: 100%;
+            -webkit-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            color: #373A36;
+            background-color: #fff;
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125)
+        }
+
+@media (prefers-reduced-motion:reduce) {
+    .hierarchy-custom li a {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none
+    }
+}
+
+.hierarchy-custom li a:hover {
+    background-color: #d1efff
+}
+/* to show arrow, it depends on font-awesome */
+.fa-chevron-right:before {
+    content: "\f054";
+}

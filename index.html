@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="BsDrillDown.js"></script>
+    <link href="bsdrilldown.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        var drilldown = null;
+
+        $(function () {
+
+            $('#btnShowHierarch').on('click', function () {
+                BsDrillDown.showHP();
+                $("#divHerirachy").show();
+
+            });
+
+            $('#btnCatDone').on('click', function () {
+                BsDrillDown.doneSelection(function (currentNode, confirmFn) {
+                    if (currentNode.Level < 3) {
+                        alert('level should be >= 5')
+                        return false;
+                    }
+
+                    var selection = confirmFn();
+                    console.log(selection);
+                    $("#divHerirachy").hide();
+                });
+
+            });
+
+            $('#btnCancel').on('click', function () {
+                BsDrillDown.cancelSelection();
+                $("#divHerirachy").hide();
+
+            });
+
+            $("#btnShowCurr").on('click', function () {
+                var o = BsDrillDown.getCurrentNode();
+                console.log(o);
+            });
+
+            $.getJSON('data.json', function (data) {
+                console.log(data);
+                BsDrillDown.initialize({
+                    headerSelector: '#hp_header',
+                    hpBodySelector: '#hp_body',
+                    keyField: 'ID',
+                    displayField: 'Name',
+                    ChildField: 'ChildData',
+                    levelField: 'Level',
+                    defaultState:[-1],
+                    empLevel:3
+                }, data);
+            });
+
+
+        });
+        
+    </script>
+
+</head>
+
+<body>
+    <button id="btnShowHierarch">Show</button>
+
+    <div id="divHerirachy" style="display:none;width: 450px;">
+        <div class="drildown-container">
+            <div id="hp_header">
+
+            </div>
+            <div>
+                <ul id="hp_body" class="hierarchy-custom">
+
+                </ul>
+            </div>
+        </div>
+        <div class="drilldown-footer">
+            <button id="btnCatDone">Done</button>
+            <button id="btnCancel">Cancel</button>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <button onclick="BsDrillDown.SelectHerirachyByKeys([-1,2,10]);$('#btnShowHierarch').trigger('click');">Select J by Keys Path [-1,2,10]</button>
+    </div>
+    <div>
+        <button onclick="BsDrillDown.SelectHerirachyByKeys([-1,1,3],6);$('#btnShowHierarch').trigger('click');">Select E by providing Partial Keys Path & then Key of Emp ([-1,1,3],6) </button>
+    </div>
+    
+</body>
+
+</html>
