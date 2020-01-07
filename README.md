@@ -1,3 +1,4 @@
+
 # Welcome to another Drill Down
 
 - You may check [demo](https://bilalshahzad139.github.io/bsdrilldown.html) here
@@ -108,6 +109,35 @@ Here **data** contains hierarchical data (Step 2)
     empLevel:3
     }, data);
 
+
+To Show HP Box
+
+    $('#btnShowHierarch').on('click', function () {
+                    BsDrillDown.showHP();
+                    $("#divHerirachy").show();
+    });
+
+To Cancel HP Selection
+
+    $('#btnCancel').on('click', function () {
+    BsDrillDown.cancelSelection();
+    $("#divHerirachy").hide();
+    });
+
+Done button working
+
+    $('#btnCatDone').on('click', function () {
+	    BsDrillDown.doneSelection(function (currentNode, confirmFn) {
+	    if (currentNode.Level < 3) {
+		    alert('level should be >= 5')
+		    return  false;
+	    }
+	    var  selection = confirmFn();
+	    console.log(selection);
+	    $("#divHerirachy").hide();
+    });
+});
+
 ## Utility Functions
 - BsDrillDown.getData(): It returns internal hierarchical data structure.
 - BsDrillDown.getDataByLevel(level). It takes level (number) and returns linear list of elements for that specific level.
@@ -117,3 +147,6 @@ Here **data** contains hierarchical data (Step 2)
 - BsDrillDown.getDataByLevelAndKey(level,key): It finds object against a key from specific level array.
 - BsDrillDown.getAllChlideNodesOfCurrentSelection(filterCriteriaFn): It gives all child of current node till end in linear array format. It also calls the function (provided as input) so you may filter nodes.
 - BsDrillDown.getCurrentHierarchyDetail(topLevelKeys): It returns detailed object against keys array.
+- BsDrillDown.showHP(): This renders the required DOM elements in hierarchy panel.
+- BsDrillDown.cancelSelection(): When HP is opened, we can play with it. But if we want to cancel the selection, we can use this function.
+- BsDrillDown.doneSelection(fn): When HP is opened, we can play with it. But if we want to save the selection, we can use this function. It takes a function (function (currentNode, confirmFn)) as parameter. One may apply any validation and if everything is fine, one will have to call confirmFn to save selection. 
