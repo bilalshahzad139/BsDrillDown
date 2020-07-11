@@ -38,6 +38,8 @@ JQuery
 		 - Level from where Employee (or whatever meaningful data) data starts. Example empLevel: 3
 	- **defaultState**
 		 - What to show as default selection. Example defaultState: [-1] 
+    - **manageLevelWiseData**
+		 - By default it is true. If it is true, it manages level wise data & allows you to get data against specific level.         
 
 ## How It works
 - It takes an object which contains hierarchical data & configuration. 

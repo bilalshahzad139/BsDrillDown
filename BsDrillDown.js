@@ -19,7 +19,8 @@ var BsDrillDown = (function () {
         hpBodySelector: '#hp',
         empLevel: 5,
         defaultState: [-1],
-        headerEleClass: 'hp-header-breadcrumb'
+        headerEleClass: 'hp-header-breadcrumb',
+        manageLevelWiseData:true
     };
 
     var $mainContainer = null;
@@ -95,8 +96,11 @@ var BsDrillDown = (function () {
 
         innerDataStructure.Child[key] = { Data: nonHierObj };
         innerDataStructure.Child[key].Child = {};
-        levelWiseData[0] = [];
-        levelWiseData[0].push(nonHierObj);
+        
+        if(opts.manageLevelWiseData){
+            levelWiseData[0] = [];
+            levelWiseData[0].push(nonHierObj);
+        }
 
         if (root[opts.ChildField] && root[opts.ChildField].length > 0) {
             GenerateList(root, root[opts.ChildField], innerDataStructure.Child[key], {});
@@ -124,17 +128,24 @@ var BsDrillDown = (function () {
 
             if (level > opts.empLevel)
                 level = opts.empLevel;
-
-            if (levelWiseData[level] == undefined)
+            
+                
+            if (opts.manageLevelWiseData && levelWiseData[level] == undefined)
                 levelWiseData[level] = [];
 
+            
+            var nonHierObj = null; 
+            if(opts.manageLevelWiseData){
+                nonHierObj = MyFind(levelWiseData[level], opts.keyField, key)
+            }
 
-            var nonHierObj = MyFind(levelWiseData[level], opts.keyField, key)
             if (!nonHierObj) {
                 nonHierObj = Object.assign({}, objInOldFormat);
                 delete nonHierObj[opts.ChildField];
                 nonHierObj.HierPaths = [];
-                levelWiseData[level].push(nonHierObj);
+                
+                if(opts.manageLevelWiseData)
+                    levelWiseData[level].push(nonHierObj);
             }
 
             //if (level == opts.empLevel) {
@@ -336,6 +347,9 @@ var BsDrillDown = (function () {
             return innerDataStructure;
         },
         getDataByLevel: function (level) {
+            if(!opts.manageLevelWiseData){
+                throw new Error('manageLevelWiseData is not set. Levelwise Data is not managed');
+            }
             return levelWiseData[level];
         },
         SelectHerirachyByKeys: function (topLevelKeys, empKey) {
@@ -361,6 +375,9 @@ var BsDrillDown = (function () {
             return keysArray;
         },
         getDataByLevelAndKey: function(level,key){
+            if(!opts.manageLevelWiseData){
+                throw new Error('manageLevelWiseData is not set. Levelwise Data is not managed');
+            }
             return MyFind(levelWiseData[level],opts.keyField,key);
         },
         getAllChlideNodesOfCurrentSelection: function(filterCriteriaFn){

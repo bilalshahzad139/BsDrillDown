@@ -41,6 +41,11 @@
                 console.log(o);
             });
 
+            $("#btnGetDataByLevel").on('click',function(){
+                var d = BsDrillDown.getDataByLevel(2);
+                console.log(d);
+            });
+
             $.getJSON('data.json', function (data) {
                 console.log(data);
                 BsDrillDown.initialize({
@@ -51,7 +56,8 @@
                     ChildField: 'ChildData',
                     levelField: 'Level',
                     defaultState:[-1],
-                    empLevel:3
+                    empLevel:3,
+                    manageLevelWiseData: false
                 }, data);
             });
 
@@ -88,7 +94,9 @@
     <div>
         <button onclick="BsDrillDown.SelectHerirachyByKeys([-1,1,3],6);$('#btnShowHierarch').trigger('click');">Select E by providing Partial Keys Path & then Key of Emp ([-1,1,3],6) </button>
     </div>
-    
+    <div>
+        <button id='btnGetDataByLevel'>Get Data by Level => BsDrillDown.getDataByLevel(2)</button>
+    </div>
 </body>
 
 </html>
